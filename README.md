@@ -104,3 +104,10 @@ git push origin $branch_name
 # Step 1
 # Step 2
 ```
+
+## TO DO:
+
+- Data preprocessing for corresponding Symbol, Date
+- Data ingestion for corresponding input/output map
+- Apply regression based classification
+- Test if it works better than random picking of options
