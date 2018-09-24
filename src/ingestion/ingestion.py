@@ -46,7 +46,7 @@ def extract_symbol_from_data():
 	else:
 		raw_data_dir_path = os.path.join(data_dir_path,'raw')
 		symbol_df = pd.DataFrame()
-		for ind in range(1,4):
+		for ind in range(12,13):
 			month_csv = r'2017_%s/*.csv'%(str(ind))
 			dr = os.path.join(raw_data_dir_path,month_csv)
 			print(dr)
@@ -168,61 +168,47 @@ def extract_data_for_model_building():
 	# df = pd.read_pickle('%s_with_pl.pk'%(symbol))
 
 extract_data_for_model_building()	
-#print(df.Days.unique())
-df = df.loc[df['Days'] == 1]
-#print(df)
-df = df.reset_index(drop=True)
-# fig = plt.figure()
-# #plt.plot(df['P_L'])
-# df['P_L'].hist(bins=10)
+
+# df = df.loc[df['Days'] == 1]
+
+# df = df.reset_index(drop=True)
+
+
+# df_train=df.sample(frac=0.5,random_state=200)
+# df_test=df.drop(df_train.index)
+
+# X_train = df_train[['Delta','Vega']]
+# y_train = df_train[['P_L']]
+
+# X_test = df_test[['Delta','Vega']]
+# y_test = df_test[['P_L']]
+
+# lm = linear_model.LinearRegression()
+# model = lm.fit(X_train,y_train)
+# predictions = lm.predict(X_test)
+# df_test['predictions'] = predictions
+# print(df_train)
+# print(df_test)
+# # Model comparison
+# df_test_random = df_test.sample(frac=0.2, random_state=100)
+# df_test_predicted = df_test.nlargest(20, ['predictions'], keep='first')
+
+
+# print(df_test_random)
+# print(df_test_predicted)
+# df_comparison = pd.DataFrame()
+
+# df_test_random =  df_test_random.reset_index(drop=True)
+# df_test_predicted = df_test_predicted.reset_index(drop=True)
+
+# df_comparison['random strategy'] = df_test_random['P_L']
+# df_comparison['risk managed strategy'] = df_test_predicted['P_L']
+# print(df_comparison)
+
+# fig1 = plt.figure()
+# df_comparison.plot.kde()
 # plt.show()
-# fig.savefig('day_5_nov_dec.png')
-#print(df)
-
-df_train=df.sample(frac=0.5,random_state=200)
-df_test=df.drop(df_train.index)
-
-X_train = df_train[['Delta','Vega']]
-y_train = df_train[['P_L']]
-
-X_test = df_test[['Delta','Vega']]
-y_test = df_test[['P_L']]
-
-lm = linear_model.LinearRegression()
-model = lm.fit(X_train,y_train)
-predictions = lm.predict(X_test)
-df_test['predictions'] = predictions
-print(df_train)
-print(df_test)
-# Model comparison
-df_test_random = df_test.sample(frac=0.2, random_state=100)
-df_test_predicted = df_test.nlargest(20, ['predictions'], keep='first')
-
-#fig_comparison = plt.figure()
-#plt.plot(df['P_L'])
-# df_test_random['P_L'].hist(bins=4)
-# df_test_predicted['P_L'].hist(bins=4)
-# plt.show()
-# fig_comparison.savefig('day_5_nov_dec.png')
-
-
-#plt.show()
-
-print(df_test_random)
-print(df_test_predicted)
-df_comparison = pd.DataFrame()
-
-df_test_random =  df_test_random.reset_index(drop=True)
-df_test_predicted = df_test_predicted.reset_index(drop=True)
-
-df_comparison['random strategy'] = df_test_random['P_L']
-df_comparison['risk managed strategy'] = df_test_predicted['P_L']
-print(df_comparison)
-
-fig1 = plt.figure()
-df_comparison.plot.kde()
-plt.show()
-fig1.savefig('strategy_comp.png')
+# fig1.savefig('strategy_comp.png')
 
 
 
