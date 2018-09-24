@@ -144,15 +144,10 @@ def sort_profit_data_date():
 		df = df.groupby('Days').apply(lambda x: x.sort_values(['DataDate']))
 		df.reset_index(drop = True, inplace = True)
 		df.to_pickle('pltest.csv')
-		print(df[df['Days']==2])
-		#df.set_index('Days',inplace=True)
-		#df.sort_values('Days',inplace=True)
-		#df_by_day = df.groupby('Days')
-		#for group in df_by_day:
-		#	print(group.sort_values('DataDate'))
-		#df.to_csv('pltest.csv')
-
-	
+		write_path = os.path.join(data_dir_path,'processed')
+		write_file = os.path.join(write_path,'%s.pk'%(symbol))
+		df.to_pickle(write_file)
+		df.to_csv('test.csv')
 
 def extract_data_for_model_building():
 	get_quandl_data()
