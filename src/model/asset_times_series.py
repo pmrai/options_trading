@@ -19,7 +19,7 @@ from keras.layers import LSTM
 import datetime
 
 
-symbol = 'GOOGL'
+#symbol = 'GOOGL'
 inv_date = datetime.datetime(2017, 8, 1, 0, 0)
 
 def get_data_path():
@@ -34,7 +34,7 @@ def write_to_preprocessed(df, filename):
     df.to_csv(write_file)
 
 
-def read_asset_date():
+def read_asset_date(symbol):
     data_dir_path = get_data_path()
     read_path = os.path.join(data_dir_path,'preprocessed')    
     exchange_data = pd.read_pickle(os.path.join(read_path,'%s_quandl.pk'%(symbol)))
@@ -46,7 +46,7 @@ def read_asset_date():
 def adj_r2_score(r2, n, k):
     return 1-((1-r2)*((n-1)/(n-k-1)))
 
-def train_test_split():
+def train_test_split(symbol):
     data_dir_path = get_data_path()
     read_path = os.path.join(data_dir_path,'preprocessed')
     df = pd.read_pickle(os.path.join(read_path,'%s_quandl.pk'%(symbol)))
@@ -75,6 +75,7 @@ def train_test_split():
     return X_train, y_train, X_test, y_test
 
 def fit_LSTM(X_train,y_train,X_test,y_test):
+
     X_tr_t = X_train.reshape(X_train.shape[0], 1, X_train.shape[1])
     X_tst_t = X_test.reshape(X_test.shape[0], 1, X_test.shape[1])
     model_lstm = Sequential()
@@ -129,9 +130,9 @@ def gather_prediction_data():
     df.to_csv('date_lstm_predict.csv')
     return df
 
-def run_time_series_prediction():
-    read_asset_date()
-    (X_train,y_train,X_test,y_test) = train_test_split()
+def run_time_series_prediction(symbol):
+    read_asset_date(symbol)
+    (X_train,y_train,X_test,y_test) = train_test_split(symbol)
     X_tst_t = fit_LSTM(X_train,y_train,X_test,y_test)
     y_pred_test_LSTM = prediction_LSTM(X_tst_t, y_test)
     results = make_time_series_dataframe(y_test, y_pred_test_LSTM)
@@ -139,7 +140,7 @@ def run_time_series_prediction():
     print(plot_df)
     plot_time_series_prediction(plot_df)
 
-def get_expiry_dates():
+def get_expiry_dates(symbol):
     data_dir_path = get_data_path()
     read_path = os.path.join(data_dir_path,'preprocessed')
     read_file = os.path.join(read_path,'%s_with_profit.pk'%(symbol))
@@ -148,30 +149,25 @@ def get_expiry_dates():
     df_exp_dates = df_all.loc[df_all['ExpirationDate']>inv_date]
     return df_exp_dates
 
-def get_expection_on_expiry_dates():
+def get_optimal_expiry_dates(symbol):
     df_test_dates = gather_prediction_data()
     df_test_dates = df_test_dates.loc[df_test_dates['LSTM_prediction']>0]
-    df_exp_dates = get_expiry_dates()
+    df_exp_dates = get_expiry_dates(symbol)
     expiration_dates = df_exp_dates.ExpirationDate.unique()
     df_test_dates = df_test_dates.set_index(['Date'])
     df = pd.DataFrame({'Date':expiration_dates})
     df_test_dates =  df_test_dates[df_test_dates.index.isin(expiration_dates)]
     df_test_dates = df_test_dates[df_test_dates['LSTM_prediction'] >= 0.03]
     df_test_dates['Days'] = df_test_dates.index-inv_date
-    print(df_test_dates)
-
-  
+    print(df_test_dates['Days'].dtype)
+    print(df_test_dates['Days'].dt.days)
+    opt_exp = df_test_dates.Days.dt.days
+    return(opt_exp)
     
-def prediction():
-    run_time_series_prediction()
-    get_expection_on_expiry_dates()
+def main():
+    run_time_series_prediction(symbol)
+    get_optimal_expiry_dates(symbol)
 
-prediction()
-
-
-
-#get_expection_on_expiry_dates()
-# gather_prediction_data()
-# plot_df = pd.read_csv('PredictionResults_LSTM_NonShift.csv')
-# plot_time_series_prediction(plot_df)
-# run_time_series_prediction()
+if __name__ == '__main__':
+    print('Running time series....')
+    main()
