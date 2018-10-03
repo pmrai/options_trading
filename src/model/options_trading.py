@@ -20,7 +20,6 @@ def main():
 def get_investment_gain(df_inv, opt_days):
     random_profit = []
     managed_profit = []
-    df_opt_comp = pd.DataFrame()
     print(df_inv)
     inv_days = []
     random_strategy = []
@@ -31,17 +30,15 @@ def get_investment_gain(df_inv, opt_days):
             pass
         else: 
             inv_days.append(day)
-            random_strategy.append(random.sample(df_select['P_L_Percent_Random'].values,1))
+            random_strategy.append(df_select['P_L_Percent_Random'].sample(1, random_state=100))
             managed_strategy.append(df_select['P_L_Percent_Managed'].iloc[0])
-    print(inv_days)
-    print(random_strategy)
-    print(managed_strategy)
     df = {'Invest_Days':inv_days,'Random':random_strategy,'Managed':managed_strategy}
     df_opt_comp = pd.DataFrame(df)
     df_opt_comp = df_opt_comp.set_index(['Invest_Days'])
-    print(df_opt_comp)
     print("Random Strategy Mean is: %d", df_opt_comp['Random'].mean())
     print("Managed Strategy Mean is: %d", df_opt_comp['Managed'].mean())
+    print("Random Strategy Std is: %d", df_opt_comp['Random'].std())
+    print("Managed Strategy Std is: %d", df_opt_comp['Managed'].std())
 
 
 
