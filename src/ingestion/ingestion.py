@@ -11,7 +11,6 @@ import os.path
 from pathlib import Path
 
 quandl.ApiConfig.api_key = 'GuTeqGsJBkf1sn8DAa9G'
-symbol = 'GOOGL'
 
 def get_data_path():
 	script_file = os.path.dirname(os.path.realpath('__file__'))
@@ -19,7 +18,7 @@ def get_data_path():
 	data_dir_path = os.path.join(current_dir,'data')
 	return data_dir_path
 
-def get_quandl_data():
+def get_quandl_data(symbol):
 	data_dir_path = get_data_path() 
 	read_path = os.path.join(data_dir_path,'preprocessed')
 	read_file = os.path.join(read_path,'%s_quandl.pk'%(symbol))
@@ -35,7 +34,7 @@ def get_quandl_data():
 def SubDirPath (d):
     return list(filter(os.path.isdir, [os.path.join(d,f) for f in os.listdir(d)]))
 
-def extract_symbol_from_data():
+def extract_symbol_from_data(symbol):
 	data_dir_path = get_data_path()
 	read_path = os.path.join(data_dir_path,'preprocessed')
 	read_file = os.path.join(read_path,'%s.pk'%(symbol))
@@ -58,7 +57,7 @@ def extract_symbol_from_data():
 		write_file = os.path.join(write_path,'%s.pk'%(symbol))
 		symbol_df.to_pickle(write_file)
 
-def clean_options_data():
+def clean_options_data(symbol):
 	data_dir_path = get_data_path()
 	read_path = os.path.join(data_dir_path,'preprocessed')
 	read_file = os.path.join(read_path,'%s_clean.pk'%(symbol))
@@ -82,7 +81,7 @@ def clean_options_data():
 	    df.to_pickle(write_file)
     
 
-def asset_value_on_expiry():
+def asset_value_on_expiry(symbol):
 	data_dir_path = get_data_path()
 	read_path = os.path.join(data_dir_path,'preprocessed')
 	read_file = os.path.join(read_path,'%s_with_val_on_expiry.pk'%(symbol))
@@ -108,7 +107,7 @@ def asset_value_on_expiry():
 		df_with_expiry = df
 		df_with_expiry.to_pickle(write_file)
 
-def get_profit_on_options():
+def get_profit_on_options(symbol):
 	data_dir_path = get_data_path()
 	read_path = os.path.join(data_dir_path,'preprocessed')
 	read_file = os.path.join(read_path,'%s_with_profit.pk'%(symbol))
@@ -124,7 +123,7 @@ def get_profit_on_options():
 		write_file = os.path.join(write_path,'%s_with_profit.pk'%(symbol))
 		df.to_pickle(write_file)
 
-def sort_profit_data_date():
+def sort_profit_data_date(symbol):
 	data_dir_path = get_data_path()
 	read_path = os.path.join(data_dir_path,'preprocessed')
 	read_file = os.path.join(read_path,'%s_date_sorted.pk'%(symbol))
@@ -142,13 +141,23 @@ def sort_profit_data_date():
 		df.to_pickle(write_file)
 		df.to_csv('test.csv')
 
-def extract_data_for_model_building():
-	asset_value_on_expiry()
-	get_profit_on_options()
-	sort_profit_data_date()
+def extract_data_for_model_building(symb):
+	get_quandl_data(symb)
+	extract_symbol_from_data(symb)
+	clean_options_data(symb)
+	asset_value_on_expiry(symb)
+	get_profit_on_options(symb)
+	sort_profit_data_date(symb)
+
+def main():
+	extract_data_for_model_building(symb)
 
 
-extract_data_for_model_building()	
+
+if __name__ == '__main__':
+	print('Creating data pipeline....')
+	main()
+	
 
 
 
