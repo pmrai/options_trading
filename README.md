@@ -1,4 +1,4 @@
-Options Trading
+## Options Trading
 
 ## Abstract
 Optimize options trading portfolio
