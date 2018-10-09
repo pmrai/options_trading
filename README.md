@@ -1,4 +1,4 @@
-## Options Trading
+# Options Trading
 
 ## Abstract
 Optimize options trading portfolio
@@ -12,7 +12,7 @@ Options trading is an AI platform that suggests risk bounded options selection. 
 
 For time series model, we use stock price data of the undelying asset and for the classification model we use historical options chain data.
 
-Google slides can be found here
+Google slides can be found [here](https://docs.google.com/presentation/d/1bubSDpVukkwkACXivLEY4nQMSzOSIPdzUTxachdkKQ4/edit#slide=id.g4302bf8b27_0_0)
 
 ## Data
 
