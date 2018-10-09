@@ -1,7 +1,8 @@
 # Options Trading
 
+This is my Insight Artificial Intelligence project. 
+
 ## What are Options
-Optimize options trading portfolio
 
 Options are trading instruments that are traded on top of an underlying asset (e.g. stock of a company). That is why they are called as derivatives. Options (specifically 'call' options) provide the the possibility of bounded risk with unbounded profit.
 
