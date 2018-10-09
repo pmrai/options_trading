@@ -1,18 +1,20 @@
-Options Trading
 
-## Abstract
-Optimize options trading portfolio
+# Options Trading
+
+This is my Insight Artificial Intelligence project. 
+
+## What are Options
 
 Options are trading instruments that are traded on top of an underlying asset (e.g. stock of a company). That is why they are called as derivatives. Options (specifically 'call' options) provide the the possibility of bounded risk with unbounded profit.
 
 
-Let us understand this using an analogy. Let us say we have our childhood friends Mickey and Donald. Mickey lives in City A which is connected with BART. Donald owns a house in city B is not connected with BART. There is a rumour that BART will be extended to city B and hence the price of Donald's price will shoot up. Mickey wants to to take advantage of this opportunity and offers a small premium upfront to lock the price of the house for some future date. There are two possibilities. If BART comes, Mickey will make profit by buying the house at a lower price than market. If BART does not come, Mickey will loose the premium offered. So Mickey's loss is bounded but profit is unbounded. Higher the price of the house, higher the profit. In this analogy, we can replace the house with an underlying stock asset.
+Let us understand this using an analogy. Let us say we have our childhood friends Mickey and Donald. Mickey lives in City A which is connected with San Francisco using BART. Donald owns a house in city B which is not connected with BART. There is a rumour that BART will be extended to city B and hence the price of Donald's price will shoot up. Mickey wants to to take advantage of this opportunity and offers a small premium upfront to lock the price of the house six months from now. In this deal, there are two future possibilities. If BART comes, Mickey will make profit by buying the house at a lower price than market price. If BART does not come, Mickey will loose the premium offered. So Mickey's loss is bounded but profit is unbounded. Higher the increase in the price of the house, greater the profit. In this analogy, we can replace the house with an underlying stock asset.
 
 Options trading is an AI platform that suggests risk bounded options selection. It uses a combination of neural network based Time series model and simple regression based classifier to select the best options portfolio.
 
 For time series model, we use stock price data of the undelying asset and for the classification model we use historical options chain data.
 
-Google slides can be found here
+Google slides can be found [here](https://docs.google.com/presentation/d/1bubSDpVukkwkACXivLEY4nQMSzOSIPdzUTxachdkKQ4/edit#slide=id.g4302bf8b27_0_0)
 
 ## Data
 
@@ -40,21 +42,3 @@ The ML model uses a simple command line interface as follows:
 python options_trading <SYMBOL>
 
 where SYMBOL is the undelying stock on which the option is traded (e.g. GOOGL for Google, VIX for Volatility Index etc.)
-
-
-
-
-
-
-## Week 1: TO DO:
-
-- Data preprocessing for corresponding Symbol, Date
-- Data ingestion for corresponding input/output map
-- Apply regression based classification
-- Test if it works better than random picking of options
-
-## Week 2:
-
-- Added ingestion.py to create the data pipeline. It reads historical option chain data, cleans it, gets the value of asset on expiry, determines profit/loss and makes the data ready for training
-
-- Added regression_model.py to build a regression based classification model for several expiry durations in days. The model reads delta and vega of an option and spits out estimated profit/loss. For a given duration, we choose 20 options which maximize predicted profit 
