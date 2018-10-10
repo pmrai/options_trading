@@ -13,6 +13,7 @@ import os.path
 from pathlib import Path
 import matplotlib.animation as animation
 import time
+import argparse
 
 #extract_data_for_model_building()
 #symbol = 'GOOGL'
@@ -26,10 +27,12 @@ def regression_model(symbol):
 	df_all = pd.read_pickle(read_file)
 	list_of_days = df_all.Days.unique()
 	days = []
-	mean_Random = []
-	std_Random = []
-	mean_Managed = []
-	std_Managed = []
+	median_Random = []
+	low_Random = []
+	high_Random = []
+	median_Managed = []
+	low_Managed = []
+	high_Managed = []
 	df_plot = pd.DataFrame()
 	df_inv = pd.DataFrame()
 	print(list_of_days)
@@ -78,40 +81,50 @@ def regression_model(symbol):
 			print(df_percent_profit)
 
 			days.append(day)
-			mean_Random.append(df_percent_profit['P_L_Percent_Random'].mean())
-			std_Random.append(df_percent_profit['P_L_Percent_Random'].std())
-			mean_Managed.append(df_percent_profit['P_L_Percent_Managed'].mean())
-			std_Managed.append(df_percent_profit['P_L_Percent_Managed'].std())
+			median_Random.append(df_percent_profit['P_L_Percent_Random'].median())
+			low_Random.append(df_percent_profit['P_L_Percent_Random'].quantile(q=0.25))
+			high_Random.append(df_percent_profit['P_L_Percent_Random'].quantile(q=0.75))
+			median_Managed.append(df_percent_profit['P_L_Percent_Managed'].median())
+			low_Managed.append(df_percent_profit['P_L_Percent_Managed'].quantile(q=0.25))
+			high_Managed.append(df_percent_profit['P_L_Percent_Managed'].quantile(q=0.75))
 
-			df = {'Days':days,'mean_Random':mean_Random,'std_Random':std_Random,'mean_Managed':mean_Managed,'std_Managed':std_Managed}
+			df = {'Days':days,'median_Random':median_Random,'low_Random':low_Random,'high_Random':high_Random,\
+					'median_Managed':median_Managed,'low_Managed':low_Managed,'high_Managed':high_Managed}
 			df_plot = pd.DataFrame(df)
 			df_plot = df_plot.set_index(['Days'])
+			df_plot.to_csv('quantile_vals')
+			print(df_plot)
 
-	return df_plot, df_inv	
+	return df_plot, df_inv
 
 
-def plot_results(df):
+def plot_results(df,symbol):
 	font = {'family': 'serif',
         'color':  'darkred',
         'weight': 'normal',
         'size': 16,
         }
-	print(df)
 	strategies = ['Random','Managed']
 	for i,strategy in enumerate(strategies):
 		plt.figure(i+1)
-		plt.errorbar(df.index, df['mean_%s'%(strategy)], yerr=df['std_%s'%(strategy)],fmt='o', color='blue',
+		print(strategy)
+		plt.errorbar(df.index, df['median_%s'%(strategy)], yerr=(df['median_%s'%(strategy)]-df['low_%s'%(strategy)],df['high_%s'%(strategy)]-df['median_%s'%(strategy)]),fmt='o', color='blue',
 	        ecolor='lightgray', elinewidth=3, capsize=0)
-		plt.title('Google Options Investment (%s Strategy)'%(strategy), fontdict=font)
+		plt.title('(%s Strategy)'%(strategy), fontdict=font)
 		plt.xlabel('Investment Duration (Days)', fontdict=font)
 		plt.ylabel('Expected Return (Percentage)', fontdict=font)
 		plt.ylim(-300,300)
-	#plt.show()	
+	plt.show()	
 
 def main():
-	df = regression_model()
-	strategy = 'Random'
-	plot_results(df,strategy)
+	parser = argparse.ArgumentParser()
+	parser.add_argument("symb", help ="SYMBOL for the underlying stock " + \
+	"you wish to trade options on", type = str)
+	args = parser.parse_args()
+	extract_data_for_model_building(args.symb)
+	df, df_inv = regression_model(args.symb)
+	#strategy = 'Random'
+	plot_results(df,args.symb)
 
 if __name__ == '__main__':
 	print('Classification using regression model....')
