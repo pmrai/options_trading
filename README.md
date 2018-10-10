@@ -4,7 +4,7 @@
 Google slides can be found [here](https://docs.google.com/presentation/d/1bubSDpVukkwkACXivLEY4nQMSzOSIPdzUTxachdkKQ4/edit#slide=id.g4302bf8b27_0_0)
 
 
-![Alt text](./risk_min.jpg?raw=true "Title")
+![Alt text](./images/results.png?raw=true "Title")
 
 This is my Insight Artificial Intelligence project. 
 
