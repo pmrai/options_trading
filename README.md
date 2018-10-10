@@ -6,7 +6,7 @@ Google slides can be found [here](https://docs.google.com/presentation/d/1bubSDp
 
 ![Alt text](./images/results.png?raw=true "Title")
 
-This is my Insight Artificial Intelligence project. The main result is shown in the figure above. Here, I compare two different strategies to select options. The first strategy (left) is selecting stocks at random. The second strategy (right) is machine learning informed option selection developed in this project. The blue dots in figures represent the median return of 20 options selected for a particular expiry date. The grey lines represent the variance of these returns. An options selection strategy is more predictable if the variance in returns is small. We clearly see that a machine learning strategy is more predictable with smaller spread around the median value.
+This is my Insight Artificial Intelligence project. The main result is shown in the figure above. Here, I compare two different strategies to select options. The first strategy (left) is selecting options at random. The second strategy (right) is machine learning informed option selection developed in this project. The blue dots in figures represent the median return of 20 options selected for a particular investment duration. The grey lines represent the variance of these returns. An options selection strategy is more predictable if the variance in returns is small. We clearly see that a machine learning strategy is more predictable with smaller spread around the median value.
 
 ## What are Options
 
