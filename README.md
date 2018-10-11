@@ -1,21 +1,20 @@
 
-# Options 
-
-Google slides can be found [here](https://docs.google.com/presentation/d/1bubSDpVukkwkACXivLEY4nQMSzOSIPdzUTxachdkKQ4/edit#slide=id.g4302bf8b27_0_0)
-
+# Options Trading
 
 ![Alt text](./images/results.png?raw=true "Title")
 
 This is my Insight Artificial Intelligence project. The main result is shown in the figure above. Here, I compare two different strategies to select options. The first strategy (left) is selecting options at random. The second strategy (right) is machine learning informed option selection developed in this project. The blue dots in figures represent the median return of 20 options selected for a particular investment duration. The grey lines represent the variance of these returns. An options selection strategy is more predictable if the variance in returns is small. We clearly see that a machine learning strategy is more predictable with smaller spread around the median value.
 
-## What are Options
+Google slides can be found [here](https://docs.google.com/presentation/d/1bubSDpVukkwkACXivLEY4nQMSzOSIPdzUTxachdkKQ4/edit#slide=id.g4302bf8b27_0_0)
+
+## What are Options?
 
 Options are trading instruments that are traded on top of an underlying asset (e.g. stock of a company). That is why they are called as derivatives. Options (specifically 'call' options) provide the the possibility of bounded risk with unbounded profit.
 
 
 Let us understand this using an analogy. Let us say we have our childhood friends Mickey and Donald. Mickey lives in City A which is connected with San Francisco using BART. Donald owns a house in city B which is not connected with BART. There is a rumour that BART will be extended to city B and hence the price of Donald's price will shoot up. Mickey wants to to take advantage of this opportunity and offers a small premium upfront to lock the price of the house six months from now. In this deal, there are two future possibilities. If BART comes, Mickey will make profit by buying the house at a lower price than market price. If BART does not come, Mickey will loose the premium offered. So Mickey's loss is bounded but profit is unbounded. Higher the increase in the price of the house, greater the profit. In this analogy, we can replace the house with an underlying stock asset.
 
-Options trading is an AI platform that suggests risk bounded options selection. It uses a combination of neural network based Time series model and simple regression based classifier to select the best options portfolio.
+Options trading is an AI platform that suggests risk bounded options selection. It uses a combination of neural network based Time series model (LSTM) and simple regression based classifier to select the best options portfolio.
 
 For time series model, we use stock price data of the undelying asset and for the classification model we use historical options chain data.
 
