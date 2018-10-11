@@ -7,6 +7,41 @@ from regression_model import regression_model, plot_results
 from asset_times_series import run_time_series_prediction, get_optimal_expiry_dates
 from random import randint, seed
 
+# import sys
+# import os.path
+# from pathlib import Path
+# import argparse
+# from glob import iglob
+
+# import pandas as pd
+# import numpy as np
+# import quandl
+# import random
+# from random import randint, seed
+# from scipy.stats import norm
+# from sklearn import linear_model
+# from sklearn.preprocessing import MinMaxScaler
+# from sklearn.metrics import r2_score
+# import tensorflow as tf
+# from keras.models import Sequential
+# from keras.layers import Dense
+# import keras.backend as K
+# from keras.callbacks import EarlyStopping
+# from keras.optimizers import Adam
+# from keras.models import load_model
+# from keras.layers import LSTM
+# import time
+# import datetime
+
+# sys.path.insert(0, './../../scripts/ingestion')
+# from ingestion import extract_data_for_model_building, get_data_path
+# from regression_model import regression_model, plot_results
+# from asset_times_series import run_time_series_prediction, get_optimal_expiry_dates
+
+# import matplotlib.pyplot as plt
+
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("symb", help ="SYMBOL for the underlying stock " + \
@@ -37,9 +72,9 @@ def get_investment_gain(df_inv, opt_days):
     df = {'Invest_Days':inv_days,'Random':random_strategy,'Managed':managed_strategy}
     df_opt_comp = pd.DataFrame(df)
     df_opt_comp = df_opt_comp.set_index(['Invest_Days'])
-    print("Random Strategy Median is: %f,%f,%f", df_opt_comp['Random'].median(),\
+    print("Random Strategy Median, 0.25 and 0.75 quantile is: ", df_opt_comp['Random'].median(),\
          df_opt_comp['Random'].quantile(q=0.25), df_opt_comp['Random'].quantile(q=0.75))
-    print("Managed Strategy Median is: %f,%f,%f", df_opt_comp['Managed'].median(),\
+    print("Managed Strategy Median, 0.25 and 0.75 quantile is: ", df_opt_comp['Managed'].median(),\
         df_opt_comp['Managed'].quantile(q=0.25), df_opt_comp['Managed'].quantile(q=0.75))
 
 

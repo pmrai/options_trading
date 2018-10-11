@@ -14,18 +14,18 @@ Google slides can be found [here](https://docs.google.com/presentation/d/1bubSDp
 The ML model uses a simple command line interface as follows:
 
  ```
-python src/model/options_trading <SYMBOL>
+python scripts/model/options_trading <SYMBOL>
 
 ```
 where SYMBOL is the undelying stock on which the option is traded (e.g. GOOGL for Google etc.)
 
-# Description
+## Description
 
-Options trading is an AI platform that suggests risk bounded options selection. It uses a combination of neural network based Time series model (LSTM) and simple regression based classifier to select the best options portfolio.
+Options trading is an AI platform that suggests risk bounded options selection. It uses a combination of neural network based time series model (LSTM) and simple regression based classifier to select risk averse options portfolio.
 
-For time series model, we use stock price data of the undelying asset and for the classification model we use historical options chain data.
+For time series model, we use stock price data of the underlying asset and for the classification model we use historical options chain data.
 
-## Data
+# Data
 
 The stock price data for time series modeling is obtained using quandl api. Historical options price data is not freely available and can be bought [here](http://www.cboe.com/data/historical-options-data). For this project, option chain data for the year 2017 is used.
 
@@ -34,13 +34,13 @@ The stock price data for time series modeling is obtained using quandl api. Hist
 For time series model, we use stock price data between from January 2010 to July 2017 for training. For classification model, we use option chain data between Jan 2017 to July 2017. We consider investment in options in the period between August 2017 to December 2017 for all expiry dates in this duration. 
 
 
-## Model
+# Model
 
-## Time Series Model
+# Time Series Model
 
 Reinforcement learning is used for time series modeling. Specifically, a neural network with five LSTM nodes and one dense layer is used for time series prediction.There are two reasons for using LSTM. First, LSTM models do not require any assumption on stationarity of the time series. Second, LSTMs can be used for predicting several time stamps ahead in time while taking into account both long and short term trends.  Note that, since only call options are considered, only a general trend is required and not the exact stock value at a particular date in future. All functions related to time series prediction is coded in asset_times_series.py file
 
-## Classification Model
+# Classification Model
 
 The data pipeline for classification is coded in ingestion.py file. It reads historical option chain data, cleans it, gets the value of asset on expiry, determines profit/loss and makes the data ready for training. The classification model is coded in regression_model.py. In this model, the inputs are the so called greeks for a particular option and the output is a profit or loss label.  With this classification model, we can determine if a given option deal with specififed values of greeks will end up in profit or loss in future. 
 
