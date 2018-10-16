@@ -19,8 +19,6 @@ from keras.models import load_model
 from keras.layers import LSTM
 import datetime
 
-
-#symbol = 'GOOGL'
 inv_date = datetime.datetime(2017, 8, 1, 0, 0)
 
 def get_data_path():
@@ -77,7 +75,7 @@ def fit_LSTM(X_train,y_train,X_test,y_test,symbol):
     X_tr_t = X_train.reshape(X_train.shape[0], 1, X_train.shape[1])
     X_tst_t = X_test.reshape(X_test.shape[0], 1, X_test.shape[1])
     model_lstm = Sequential()
-    model_lstm.add(LSTM(4, input_shape=(1, X_train.shape[1]), activation='relu', kernel_initializer='lecun_uniform', return_sequences=False))
+    model_lstm.add(LSTM(6, input_shape=(1, X_train.shape[1]), activation='relu', kernel_initializer='lecun_uniform', return_sequences=False))
     model_lstm.add(Dense(1))
     model_lstm.compile(loss='mean_squared_error', optimizer='adam')
     early_stop = EarlyStopping(monitor='loss', patience=5, verbose=1)
@@ -115,16 +113,18 @@ def plot_time_series_prediction(plot_df):
         }
     y_test = plot_df['True']
     y_pred_test_LSTM = plot_df['LSTM_prediction']
+    ts = plt.figure(10)
     plt.plot(y_test, label='True')
     plt.plot(y_pred_test_LSTM, label='LSTM')
     plt.title('Google Stock Prediction using LSTM', fontdict=font)
     plt.xlabel('Investment Duration', fontdict=font)
     plt.ylabel('Normalized Stock Price', fontdict=font)
-    # plt.title("LSTM's_Prediction")
-    # plt.xlabel('Observation')
-    # plt.ylabel('Asset scaled')
+    plt.title("LSTM's_Prediction")
+    plt.xlabel('Observation')
+    plt.ylabel('Asset scaled')
     plt.legend()
-    #plt.show()
+    plt.show(block=False)
+    return ts
 
 def gather_prediction_data():
     val_df = pd.read_csv('PredictionResults_LSTM_NonShift.csv')
@@ -136,7 +136,6 @@ def gather_prediction_data():
     return df
 
 def run_time_series_prediction(symbol):
-    #read_asset_date(symbol)
     (X_train,y_train,X_test,y_test,inv_val) = train_test_split(symbol)
     lstm_model = 'LSTM_NonShift_%s.h5'%(symbol)
     if os.path.exists(lstm_model):
@@ -148,8 +147,8 @@ def run_time_series_prediction(symbol):
     results = make_time_series_dataframe(y_test, y_pred_test_LSTM)
     plot_df = pd.read_csv('PredictionResults_LSTM_NonShift.csv')
     print(plot_df)
-    plot_time_series_prediction(plot_df)
-    return inv_val
+    ts = plot_time_series_prediction(plot_df)
+    return inv_val,ts
 
 def get_expiry_dates(symbol):
     data_dir_path = get_data_path()
