@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, './../../src/ingestion')
+#sys.path.insert(0, './../../src/ingestion')
 from ingestion import extract_data_for_model_building, get_data_path
 from glob import iglob
 import pandas as pd
@@ -15,12 +15,9 @@ import matplotlib.animation as animation
 import time
 import argparse
 
-#extract_data_for_model_building()
-#symbol = 'GOOGL'
 inv_date = pd.to_datetime('2017-08-01')
 
 def regression_model(symbol):
-	#extract_data_for_model_building()
 	data_dir_path = get_data_path()
 	read_path = os.path.join(data_dir_path,'processed')
 	read_file = os.path.join(read_path,'%s.pk'%(symbol))
@@ -36,7 +33,7 @@ def regression_model(symbol):
 	df_plot = pd.DataFrame()
 	df_inv = pd.DataFrame()
 	print(list_of_days)
-	for day in list_of_days[30:60]:
+	for day in list_of_days[1:60]:
 		df = df_all.loc[df_all['Days'] == day]
 
 
@@ -90,10 +87,14 @@ def regression_model(symbol):
 
 			df = {'Days':days,'median_Random':median_Random,'low_Random':low_Random,'high_Random':high_Random,\
 					'median_Managed':median_Managed,'low_Managed':low_Managed,'high_Managed':high_Managed}
+
 			df_plot = pd.DataFrame(df)
+			print(df_plot['median_Random'].median(),(df_plot['high_Random'] - df_plot['median_Random']).median(), (df_plot['median_Random'] - df_plot['low_Random']).median())
+			print(df_plot['median_Managed'].median(),(df_plot['high_Managed'] - df_plot['median_Managed']).median(), (df_plot['median_Managed'] - df_plot['low_Managed']).median())
 			df_plot = df_plot.set_index(['Days'])
 			df_plot.to_csv('quantile_vals')
 			print(df_plot)
+			plot_results(df_plot,symbol)
 
 	return df_plot, df_inv
 
@@ -113,8 +114,8 @@ def plot_results(df,symbol):
 		plt.title('(%s Strategy)'%(strategy), fontdict=font)
 		plt.xlabel('Investment Duration (Days)', fontdict=font)
 		plt.ylabel('Expected Return (Percentage)', fontdict=font)
-		plt.ylim(-300,300)
-	plt.show()	
+		plt.ylim(-200,200)
+	plt.show(block=False)	
 
 def main():
 	parser = argparse.ArgumentParser()
@@ -123,8 +124,6 @@ def main():
 	args = parser.parse_args()
 	extract_data_for_model_building(args.symb)
 	df, df_inv = regression_model(args.symb)
-	#strategy = 'Random'
-	plot_results(df,args.symb)
 
 if __name__ == '__main__':
 	print('Classification using regression model....')
