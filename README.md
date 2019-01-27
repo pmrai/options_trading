@@ -47,11 +47,3 @@ Reinforcement learning is used for time series modeling. Specifically, a neural 
 # Classification Model
 
 The data pipeline for classification is coded in ingestion.py file. It reads historical option chain data, cleans it, gets the value of asset on expiry, determines profit/loss and makes the data ready for training. The classification model is coded in regression_model.py. In this model, the inputs are the so called greeks for a particular option and the output is a profit or loss label.  With this classification model, we can determine if a given option deal with specififed values of greeks will end up in profit or loss in future. 
-
-## What are Options?
-
-Options are trading instruments that are traded on top of an underlying asset (e.g. stock of a company). That is why they are called as derivatives. Options (specifically 'call' options) provide the the possibility of bounded risk with unbounded profit.
-
-
-Let us understand this using an analogy. Let us say we have our childhood friends Mickey and Donald. Mickey lives in City A which is connected with San Francisco using BART. Donald owns a house in city B which is not connected with BART. There is a rumour that BART will be extended to city B and hence the price of Donald's price will shoot up. Mickey wants to to take advantage of this opportunity and offers a small premium upfront to lock the price of the house six months from now. In this deal, there are two future possibilities. If BART is extended to city B, Mickey will make profit by buying the house at a lower price than market price. If BART is not extended, Mickey will loose the premium offered. So Mickey's loss is bounded but profit is unbounded. Higher the increase in the price of the house, greater the profit. In this analogy, we can replace the house with an underlying stock asset for options. Options price is the amount 
-
