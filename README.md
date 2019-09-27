@@ -5,7 +5,7 @@
 
 This is my Insight Artificial Intelligence project. The main result is shown in the figure above. Here, I compare two different strategies to select options traded over Google stock. The first strategy (left) is selecting options at random. The second strategy (right) is machine learning informed option selection developed in this project. The blue dots in figures represent the median return of 20 options selected for a particular investment duration. The grey lines represent the variance of these returns. An options selection strategy is more predictable if the variance in returns is small. We clearly see that a machine learning strategy is more predictable with smaller spread around the median value.
 
-For an easy and rspid introduction to options, see section 'what are options?' below.
+For an easy and rapid introduction to options, see section 'what are options?' below.
 
 Google slides can be found [here](https://docs.google.com/presentation/d/1bubSDpVukkwkACXivLEY4nQMSzOSIPdzUTxachdkKQ4/edit#slide=id.g4302bf8b27_0_0)
 
