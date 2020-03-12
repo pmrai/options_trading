@@ -40,9 +40,7 @@ For time series model, we use stock price data between from January 2010 to July
 
 # Time Series Model
 
-Reinforcement learning is used for time series modeling. Specifically, a neural network with five LSTM nodes and one dense layer is used for time series prediction.There are two reasons for using LSTM. First, LSTM models do not require any assumption on stationarity of the time series. Second, LSTMs can be used for predicting several time stamps ahead in time while taking into account both long and short term trends.  Note that, since only call options are considered, only a general trend is required and not the exact stock value at a particular date in future. All functions related to time series prediction is coded in asset_time_series.py file.
-
-![Alt text](./images/google_bull.png?=1x1)
+Sequence based deep learning can be used for time series modeling. Specifically, a neural network with five LSTM nodes and one dense layer is used for time series prediction.There are two reasons for using LSTM. First, LSTM models do not require any assumption on stationarity of the time series. Second, LSTMs can be used for predicting several time stamps ahead in time while taking into account both long and short term trends.  Note that, since only call options are considered, only a general trend is required and not the exact stock value at a particular date in future. All functions related to time series prediction is coded in asset_time_series.py file.
 
 # Classification Model
 
